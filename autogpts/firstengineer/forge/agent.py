@@ -11,6 +11,9 @@ from forge.sdk import (
     Workspace,
 )
 import json
+from forge.sdk import chat_completion_request
+
+
 
 LOG = ForgeLogger(__name__)
 
@@ -137,7 +140,7 @@ class ForgeAgent(Agent):
             answer = json.loads(chat_response.choices[0].message.content)
 
         # Log the answer for debugging purposes
-            LOG.info(print.pformat(answer))
+            # LOG.info(print(answer))
 
         except json.JSONDecodeError as e:
         # Handle JSON decoding errors
@@ -145,9 +148,10 @@ class ForgeAgent(Agent):
         except Exception as e:
         # Handle other exceptions
             LOG.error(f"Unable to generate chat response: {e}")
+            
 
     # Extract the ability from the answer
-            ability = answer["ability"]
+        ability = answer["ability"]
 
     # Run the ability and get the output
     # We don't actually use the output in this example
