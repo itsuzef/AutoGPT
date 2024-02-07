@@ -5,6 +5,7 @@ FROM python:3.11-slim-buster as base
 WORKDIR /app
 
 # Install system dependencies
+#make sure to avoid docker changes
 RUN apt-get update \
     && apt-get install -y build-essential curl ffmpeg \
     && apt-get clean \
