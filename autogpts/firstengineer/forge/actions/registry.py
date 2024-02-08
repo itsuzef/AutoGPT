@@ -2,8 +2,8 @@ import glob
 import importlib
 import inspect
 import os
+import requests
 from typing import Any, Callable, List
-
 import pydantic
 
 
@@ -97,7 +97,6 @@ def action(
 
     return decorator
 
-
 class ActionRegister:
     def __init__(self, agent) -> None:
         self.abilities = {}
@@ -183,6 +182,44 @@ class ActionRegister:
         except Exception:
             raise
 
+@action(
+    name="write_file",
+    description="Write data to a file",
+    parameters=[
+        {
+            "name": "file_path",
+            "description": "Path to the file",
+            "type": "string",
+            "required": True,
+        },
+        {
+            "name": "data",
+            "description": "Data to write to the file",
+            "type": "bytes",
+            "required": True,
+        },
+    ],
+    output_type="None",
+)
+async def write_file(agent, task_id: str, file_path: str, data: bytes) -> None:
+    pass
+
+@action(
+  name="fetch_webpage",
+  description="Retrieve the content of a webpage",
+  parameters=[
+      {
+          "name": "url",
+          "description": "Webpage URL",
+          "type": "string",
+          "required": True,
+      }
+  ],
+  output_type="string",
+)
+async def fetch_webpage(agent, task_id: str, url: str) -> str:
+  response = requests.get(url)
+  return response.text
 
 if __name__ == "__main__":
     import sys
